@@ -2,23 +2,44 @@ local M = {}
 
 -- fake like posix -----------------------------------------------------------
 
+local convert_raw2posix = {
+	type = function(k,v)
+		local convert = {
+			f = "file",
+			d = "directory",
+			l = "link",
+			s = "socket",
+			p = "named pipe",
+			c = "char device",
+			b = "block device",
+		}
+		return "type", convert[v] or "other"
+	end,
+	mod = function(k, v) return "mode", v end, -- rw-rw-rw-
+--	dev / ino / uid / gid / mtime / ctime / atime / size / nlink
+}
+
+local convert_posix2raw = {
+	mode = "mod",
+}
+
+--local full_name = string.format('%s/%s', directory, name)
+--local info = assert(posix.stat(full_name))
+function M.stat(full_name)
+	local info = {}
+	TODO
+	info.type = 'link'
+	info.type = 'regular'
+	info.type = 'directory'
+
+end
+
 -- local files = posix.dir(dir)
 -- table.sort(files)
 -- for _, f in ipairs(files) do end
 
 -- iter, dir_obj = lfs.dir(path)
 function M.dir(dir) -- return a i-table with relative file/dir names
-
-end
-
---local full_name = string.format('%s/%s', directory, name)
---local info = assert(posix.stat(full_name))
-function M.stat(full_name)
-	local info = {}
-
-	info.type = 'link'
-	info.type = 'regular'
-	info.type = 'directory'
 
 end
 

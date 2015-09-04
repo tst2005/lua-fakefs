@@ -7,13 +7,18 @@ for _, modname in ipairs{ "io", "fakefs.internal" } do
 	print("- try with "..modname..":")
 
 	local fd = io.open("a", "w")
-	fd:write("hello world\n")
+	fd:write("hello")
+	fd:write(" world")
 	fd:close()
 
 	local fd = io.open("a", "r")
-	io.stdout:write( fd:read("*all") )
+	if fd:read("*all") == "hello world" then
+		print("ok")
+	else
+		print("fail")
+	end
 	fd:close()
 end
 
-
+os.execute("rm -- a")
 
